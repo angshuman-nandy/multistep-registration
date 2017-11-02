@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import BasicInfo from './BasicInfo'
+import EducationInfo from './EducationInfo'
+import ProfessionInfo from './ProfessionInfo'
+
 
   let fieldvalues = {
 
@@ -50,24 +54,24 @@ class Registration extends Component {
 
       case 1:
       return(
-      <div>
-      <p>step {this.state.step}</p>
-        <BasicInfo onUpdate={this.update} />
-        <button onClick={this.nextStep.bind(this)}> ok </button>
+      <div className="container">
+      <h1>step: {this.state.step} | Basic Information </h1>
+        <BasicInfo onUpdate={this.update} fieldValues={fieldvalues} />
+        <button className="btn btn-lg" onClick={this.nextStep.bind(this)}> Next </button>
         </div>
        )
       case 2:
       return(
-        <div>
-        <EducationInfo onUpdate={this.updateEdu} />
-        <button onClick={this.previousStep.bind(this)}> back </button>
-         <button onClick={this.nextStep.bind(this)}> ok </button>
+        <div className="container">
+        <EducationInfo onUpdate={this.updateEdu} fieldValues={fieldvalues} />
+        <button className="btn btn-lg"  onClick={this.previousStep.bind(this)}> back </button>
+         <button className="btn btn-lg"  onClick={this.nextStep.bind(this)}> Next </button>
         </div>
         )
       case 3:
       return(
         <div>
-        <ProfessionInfo onUpdate={this.updatePro} />
+        <ProfessionInfo onUpdate={this.updatePro} fieldValues={fieldvalues}/>
         <button onClick={this.previousStep.bind(this)}> back </button>
          <button onClick={this.nextStep.bind(this)}> ok </button>
         </div>
@@ -99,195 +103,9 @@ class Registration extends Component {
     }
   }
 
-class BasicInfo extends Component {
-  constructor(props){
-    super(props);
-    this.state= ({
-      name: fieldvalues.name,
-      age: fieldvalues.age,
-      mobile: fieldvalues.mobile,
-      email: fieldvalues.email
-
-    })
-  }
 
 
-update = (e) => {
-    
-    this.props.onUpdate(e.target.name,e.target.value);
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-};
 
-  render(){
-    return(
-       <form>
-          <label>Name: 
-            <input type="text" name="name" value={this.state.name} onChange={this.update}/>
-          </label>
-           <label>age: 
-            <input type="text" name="age" value={this.state.age} onChange={this.update}/>
-          </label>
-           <label>mobile: 
-            <input type="text" name="mobile" value={this.state.mobile} onChange={this.update}/>
-          </label>
-           <label>email: 
-            <input type="text" name="email" value={this.state.email} onChange={this.update}/>
-          </label>
-        </form>
-      )
-  }
-}
-
-
-class EducationInfo extends Component{
-  constructor(props){
-    super(props);
-    this.state = ({
-      education: fieldvalues.education.slice()
-    })
-    this.handleInputChange = this.handleInputChange.bind(this)
-  }
-
- handleInputChange = (idx) => (evt) => {
-    const newEducation = this.state.education.map((edu, sidx) => {
-      if (idx !== sidx) return edu;
-      return {...edu, [evt.target.name]: evt.target.value };
-    });
-    
-    this.setState({ education: newEducation });
-  }
-
-handleAddEducation = () => {
-    this.setState({ education: this.state.education.concat([{ degree: '', institute: '', year: '',marks: ''}]) });
-  }
-
- eduUpdate = (e) => {
-    
-  this.props.onUpdate(this.state.education);
-   console.log(this.state.education)
-   
-}
-  
-  handleRemoveEducation = (idx) => () => {
-    this.setState({ education: this.state.education.filter((s, sidx) => idx !== sidx) });
-  };
-
-  render(){
-    return(
-    <form>   
-        {this.state.education.map((edu, idx) => (
-          <div>
-            <input
-              type="text"
-              placeholder={`degree`}
-              name="degree"
-              value={edu.degree}
-              onChange={this.handleInputChange(idx)}
-            />
-             <input
-              type="text"
-              placeholder={`institute`}
-              name="institute"
-              value={edu.institute}
-              onChange={this.handleInputChange(idx)}
-            />
-             <input
-              type="text"
-              placeholder={`year`}
-              name="year"
-              value={edu.year}
-              onChange={this.handleInputChange(idx)}
-            />
-             <input
-              type="text"
-              placeholder={`marks`}
-              name="marks"
-              value={edu.marks}
-              onChange={this.handleInputChange(idx)}
-            />
-            <button type="button" onClick={this.handleRemoveEducation(idx)}>-</button>
-          </div>
-        ))}
-        <button type="button" onClick={this.handleAddEducation}>Add Education</button>
-        <button type="button" onClick={this.eduUpdate}>save</button>
-
-    </form>
-    )
-  }
-}
-
-
-class ProfessionInfo extends Component{
-  constructor(props){
-    super(props);
-    this.state = ({
-      profession: fieldvalues.profession.slice()
-    })
-    this.handleInputChange = this.handleInputChange.bind(this)
-  }
-
- handleInputChange = (idx) => (evt) => {
-    const newProfession = this.state.profession.map((pro, sidx) => {
-      if (idx !== sidx) return pro;
-      return {...pro, [evt.target.name]: evt.target.value };
-    });
-    
-    this.setState({ profession: newProfession });
-  }
-
-handleAddProfession = () => {
-    this.setState({ profession: this.state.profession.concat([{ company: '', designation: '', yearOfExp: ''}]) });
-  }
-
- proUpdate = (e) => {
-    
-  this.props.onUpdate(this.state.profession);
-   console.log(this.state.profession)
-   
-}
-  
-  handleRemoveProfession = (idx) => () => {
-    this.setState({ profession: this.state.profession.filter((s, sidx) => idx !== sidx) });
-  };
-
-  render(){
-    return(
-    <form>   
-        {this.state.profession.map((pro, idx) => (
-          <div>
-            <input
-              type="text"
-              placeholder={`company`}
-              name="company"
-              value={pro.company}
-              onChange={this.handleInputChange(idx)}
-            />
-             <input
-              type="text"
-              placeholder={`designation`}
-              name="designation"
-              value={pro.designation}
-              onChange={this.handleInputChange(idx)}
-            />
-             <input
-              type="text"
-              placeholder={`yearOfExp`}
-              name="yearOfExp"
-              value={pro.yearOfExp}
-              onChange={this.handleInputChange(idx)}
-            />
-            <button type="button" onClick={this.handleRemoveProfession(idx)}>-</button>
-          </div>
-        ))}
-        <button type="button" onClick={this.handleAddProfession}>Add Profession</button>
-        <button type="button" onClick={this.proUpdate}>save</button>
-
-    </form>
-    )
-  }
-}
 
 export default Registration;
 
