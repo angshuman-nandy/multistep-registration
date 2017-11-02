@@ -1,21 +1,31 @@
 import React, { Component } from 'react';
+import { FormErrors } from './FormErrors';
 
 class EducationInfo extends Component{
   constructor(props){
     super(props);
     this.state = ({
-      education: this.props.fieldValues.education.slice()
+      education: this.props.fieldValues.education.slice(),
+      formErrors: {degree: '', institute: '',year: '',marks: ''},
+      degreeValid: false,
+      instituteValid: false,
+      yearValid: false,
+      marksValid: false,
+      formValid: false
     })
     this.handleInputChange = this.handleInputChange.bind(this)
   }
 
  handleInputChange = (idx) => (evt) => {
+     const name = evt.target.name;
+    const value = evt.target.value;
     const newEducation = this.state.education.map((edu, sidx) => {
       if (idx !== sidx) return edu;
       return {...edu, [evt.target.name]: evt.target.value };
     });
     
-    this.setState({ education: newEducation });
+     this.setState({ education: newEducation },
+                  () => { this.validateField(idx,name, value) });
   }
 
 handleAddEducation = () => {
@@ -33,62 +43,97 @@ handleAddEducation = () => {
     this.setState({ education: this.state.education.filter((s, sidx) => idx !== sidx) });
   };
 
-  render(){
-    return(
-    <form>   
-        {this.state.education.map((edu, idx) => (
-          <div className="container">
-          <div className="form-group">
-          <label> Degree </label>
-            <input
-              type="text"
-              placeholder={`degree`}
-              className="form-control"
-              name="degree"
-              value={edu.degree}
-              onChange={this.handleInputChange(idx)}
-            />
-            </div>
-            <div className="form-group">
-            <label> institute </label>
-             <input
-              type="text"
-              className="form-control"
-              placeholder={`institute`}
-              name="institute"
-              value={edu.institute}
-              onChange={this.handleInputChange(idx)}
-            />
-            </div>
-            <div className="form-group">
-          <label> Year of passing </label>
-             <input
-              type="text"
-              className="form-control"
-              placeholder={`year`}
-              name="year"
-              value={edu.year}
-              onChange={this.handleInputChange(idx)}
-            />
-            </div>
-            <div className="form-group">
-          <label> Marks </label>
-             <input
-              type="text"
-              className="form-control"
-              placeholder={`marks`}
-              name="marks"
-              value={edu.marks}
-              onChange={this.handleInputChange(idx)}
-            />
-            </div>
-            <button className="btn btn-sm" type="button" onClick={this.handleRemoveEducation(idx)}>Remove Education Detail</button>
-          </div>
-        ))}
-        <button className="btn btn-sm" type="button" onClick={this.handleAddEducation}>Add Education Details</button>
-        <button className="btn btn-sm" type="button" onClick={this.eduUpdate}>save</button>
+ validateField(idx,fieldName, value) {
+    let fieldValidationErrors = this.state.formErrors;
+    let degreeValid = this.state.degreeValid;
+    let instituteValid = this.state.instituteValid;
+    let yearValid = this.state.yearValid;
+    let marksValid = this.state.marksValid;
 
-    </form>
+    switch(fieldName) {
+      case 'degree':
+        degreeValid =value.match('^[A-Z]+$');
+        fieldValidationErrors.degree = degreeValid ? '' : ' is invalid';
+        break;
+      case 'institute':
+        instituteValid = value.length >=3;
+        fieldValidationErrors.institute = instituteValid ? '': ' too short';
+        break;
+      case 'year':
+        yearValid =  (value.length == 4 && value.match('^[0-9]+$'))
+
+        fieldValidationErrors.year = yearValid ? '': ' is invalid';
+        break;
+         case 'marks':
+        marksValid =  (value.length <= 3 && value.match('^[0-9]+$'))
+
+        fieldValidationErrors.marks = marksValid ? '': ' is invalid';
+        break;
+      default:
+        break;
+    }
+    this.setState({formErrors: fieldValidationErrors,
+                    degreeValid: degreeValid,
+                    instituteValid: instituteValid,
+                    yearValid: yearValid,
+                    marksValid: marksValid
+                  }, this.validateForm);
+  }
+
+   validateForm() {
+    this.setState({formValid: this.state.degreeValid && this.state.instituteValid && this.state.yearValid && this.state.marksValid });
+  }
+
+  errorClass(error) {
+    return(error.length === 0 ? '' : 'has-error');
+  }
+
+  render(){
+    return( 
+      <div>
+       <div className="panel panel-default">
+         <span> <FormErrors formErrors={this.state.formErrors} /></span>
+        </div>
+        {this.state.education.map((edu, idx) => (
+          <div className="form-box">
+             <div className={`form-group ${this.errorClass(this.state.formErrors.degree)}`}>
+          <label htmlFor="degree">degree</label>
+          <input type="text" required className="form-control" name="degree"
+            placeholder="degree"
+            value={edu.degree}
+            onChange={this.handleInputChange(idx)}  />
+        </div>
+             <div className={`form-group ${this.errorClass(this.state.formErrors.institute)}`}>
+          <label htmlFor="institute">institute</label>
+          <input type="text" required className="form-control" name="institute"
+            placeholder="institute"
+            value={edu.institute}
+            onChange={this.handleInputChange(idx)}  />
+        </div>
+             <div className={`form-group ${this.errorClass(this.state.formErrors.year)}`}>
+          <label htmlFor="year">year</label>
+          <input type="text" required className="form-control" name="year"
+            placeholder="year"
+            value={edu.year}
+            onChange={this.handleInputChange(idx)}  />
+        </div>
+             <div className={`form-group ${this.errorClass(this.state.formErrors.marks)}`}>
+          <label htmlFor="marks">marks</label>
+          <input type="text" required className="form-control" name="marks"
+            placeholder="marks"
+            value={edu.marks}
+            onChange={this.handleInputChange(idx)}  />
+        </div>
+        <button className="btn btn-medium btn-danger" type="button" onClick={this.handleRemoveEducation(idx)}>remove</button>
+      </div>
+        ))}
+
+       
+        <div className="add-box">
+  <button className="btn btn-medium btn-warning" type="button" onClick={this.handleAddEducation}>Add Another</button>
+        <button className="btn btn-medium btn-success" type="button" onClick={this.eduUpdate}>save</button>
+        </div>
+      </div>
     )
   }
 }

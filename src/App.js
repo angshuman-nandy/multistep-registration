@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import BasicInfo from './BasicInfo'
 import EducationInfo from './EducationInfo'
+import './App.css';
+import './progress.css';
 import ProfessionInfo from './ProfessionInfo'
+import Progress from './Progress';
+import CircularProgressbar from 'react-circular-progressbar';
+
 
 
   let fieldvalues = {
 
-  name : null,
-  age : null,
-  email : null,
-  mobile: null,
+  name : '',
+  age : '',
+  email : '',
+  mobile: '',
   education: [{ degree: '', institute: '' , year: '' ,marks: ''}],
   profession: [{ company: '', designation: '', yearOfExp: ''}]
 
@@ -22,7 +26,8 @@ class Registration extends Component {
  constructor(props){
   super(props);
   this.state= {
-    step: 1
+    step: 1,
+    f_valid: false
   };
  }
 
@@ -37,8 +42,12 @@ class Registration extends Component {
   })
  }
 
- update(n,v){
-  fieldvalues[n] = v
+ updateBasic(v){
+  fieldvalues.name = v.name
+  fieldvalues.age = v.age
+  fieldvalues.mobile = v.mobile
+  fieldvalues.email = v.email
+  
  }
 
  updateEdu(edu){
@@ -54,26 +63,53 @@ class Registration extends Component {
 
       case 1:
       return(
-      <div className="container">
-      <h1>step: {this.state.step} | Basic Information </h1>
-        <BasicInfo onUpdate={this.update} fieldValues={fieldvalues} />
-        <button className="btn btn-lg" onClick={this.nextStep.bind(this)}> Next </button>
+
+        <div className="container">
+      <div className="container box">
+      <Progress completed={25} color={"blue"}/>
+      <div className="container progress-div">
+      <CircularProgressbar percentage={25}/>
+      </div>
+      <h1>{this.state.step} |  Basic Information </h1>
+        <BasicInfo onUpdate={this.updateBasic} fieldValues={fieldvalues} />
+        </div>
+        <div className="container navigate">
+        <button className="btn btn-lg btn-primary" onClick={this.nextStep.bind(this)} ><span className="glyphicon glyphicon-step-forward"></span> Next </button>
+        </div>
         </div>
        )
       case 2:
       return(
-        <div className="container">
+         <div className="container"> 
+      <div className="container box">
+      <Progress completed={50} color={"green"}/>
+      <div className="container progress-div">
+      <CircularProgressbar percentage={50}/>
+      </div>
+      <h1>{this.state.step} |  Education Information </h1>
         <EducationInfo onUpdate={this.updateEdu} fieldValues={fieldvalues} />
-        <button className="btn btn-lg"  onClick={this.previousStep.bind(this)}> back </button>
-         <button className="btn btn-lg"  onClick={this.nextStep.bind(this)}> Next </button>
+        </div>
+        <div className="container navigate">
+        <button className="btn btn-lg btn-primary"  onClick={this.previousStep.bind(this)}><span className="glyphicon glyphicon-step-backward"></span> back </button>
+         <button className="btn btn-lg btn-primary" onClick={this.nextStep.bind(this)} ><span className="glyphicon glyphicon-step-forward"></span> Next </button>
+        </div>
         </div>
         )
       case 3:
       return(
-        <div>
-        <ProfessionInfo onUpdate={this.updatePro} fieldValues={fieldvalues}/>
-        <button onClick={this.previousStep.bind(this)}> back </button>
-         <button onClick={this.nextStep.bind(this)}> ok </button>
+      <div className="container"> 
+      <div className="container box">
+      <Progress completed={75} color={"red"}/>
+      <div className="container progress-div">
+      <CircularProgressbar percentage={75}/>
+      </div>
+      <h1>{this.state.step} |  Professional Information </h1>
+         <ProfessionInfo onUpdate={this.updatePro} fieldValues={fieldvalues}/>
+        </div>
+        <div className="container navigate">
+        <button className="btn btn-lg btn-primary"  onClick={this.previousStep.bind(this)}><span className="glyphicon glyphicon-step-backward"></span> back </button>
+         <button className="btn btn-lg btn-primary" onClick={this.nextStep.bind(this)} ><span className="glyphicon glyphicon-step-forward"></span> Next </button>
+        </div>
         </div>
         )
       case 4:
