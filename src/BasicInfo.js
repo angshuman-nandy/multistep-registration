@@ -16,13 +16,15 @@ class BasicInfo extends Component {
       ageValid: false,
       mobileValid: false,
       formValid: false,
-      enableNext: false
-    })
+      update: this.props.updateVal
+    });
+
+    this.handleChange = this.handleChange.bind(this)
     
   }
 
 
-  update = (e) => {
+  handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     this.setState({
@@ -31,13 +33,15 @@ class BasicInfo extends Component {
    
     
   }
-   enablenext = (e) => {
-    this.setState({
-        enableNext : true
-    })
+   handleSave = (e) => {
     var val = {name: this.state.name,age: this.state.age, mobile: this.state.mobile, email: this.state.email}
-     this.props.onUpdate(val)
+     this.props.onUpdate(val);
+     if(this.state.update == false)
+     this.props.onNext();
+      else
+      this.props.goTo(4);
   }
+
 
  validateField(fieldName, value) {
     let fieldValidationErrors = this.state.formErrors;
@@ -97,30 +101,31 @@ class BasicInfo extends Component {
           <input type="text" required className="form-control" name="name"
             placeholder="Name"
             value={this.state.name}
-            onChange={this.update}  />
+            onChange={this.handleChange}  />
         </div>
         <div className={`form-group ${this.errorClass(this.state.formErrors.age)}`}>
           <label htmlFor="age">age</label>
           <input type="text" required className="form-control" name="age"
             placeholder="age"
             value={this.state.age}
-            onChange={this.update}  />
+            onChange={this.handleChange}  />
         </div>
           <div className={`form-group ${this.errorClass(this.state.formErrors.mobile)}`}>
           <label htmlFor="mobile">mobile number</label>
           <input type="text" required className="form-control" name="mobile"
             placeholder="mobile"
             value={this.state.mobile}
-            onChange={this.update}  />
+            onChange={this.handleChange}  />
         </div>
           <div className={`form-group ${this.errorClass(this.state.formErrors.email)}`}>
           <label htmlFor="email">Email address</label>
           <input type="text" required className="form-control" name="email"
             placeholder="Email"
             value={this.state.email}
-            onChange={this.update}  />
+            onChange={this.handleChange} />
         </div>
-        <button type="button" onClick={this.enablenext} className="btn btn-md btn-success" >save</button>
+        <button type="button" onClick={this.handleSave} disabled={!this.state.formValid} className="btn btn-md btn-success" >save</button>
+        <button type="button" className={this.state.update? "btn btn-lg btn-warning ":"hidden"} onClick={this.handleSave} > Update </button>
         </form>
         </div>
       )

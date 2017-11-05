@@ -10,6 +10,12 @@
 }
 }
 
+.hidden{
+  display: none;
+}
+#root{
+  font-family: 'Handlee', cursive;
+}
 .progress-div{
   margin-top: 2%;
   height: 100px;
@@ -18,11 +24,37 @@
 .box{
   margin-top: 2%;
   max-width: 100%;
-  margin-bottom: 5%;
+  margin-bottom: 10px;
   background-color: #EEEEEE;
   padding-bottom: 4%;
   box-shadow: 10px 10px 10px;
 
+}
+.display-box{
+   margin-top: 5%;
+  max-width: 100%;
+  margin-bottom: 10px;
+  background-color: #80CBC4;
+  padding-bottom: 4%;
+  box-shadow: 10px 10px 10px;
+
+}
+.display-box h2{
+  font-size: 30px;
+}
+.display-box h3{
+  font-size: 20px;
+  font-weight: bold;
+}
+.display-box p{
+  font-size: 20px;
+}
+.m-display-box{
+  background-color: #B3E5FC;
+  width: 100%;
+}
+.box h1{
+  margin-top: 0;
 }
 .panel span{
   color: red

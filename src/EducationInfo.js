@@ -131,7 +131,7 @@ handleAddEducation = () => {
        
         <div className="add-box">
   <button className="btn btn-medium btn-warning" type="button" onClick={this.handleAddEducation}>Add Another</button>
-        <button className="btn btn-medium btn-success" type="button" onClick={this.eduUpdate}>save</button>
+        <button className="btn btn-medium btn-success" type="button" disabled={!this.state.formValid} onClick={this.eduUpdate}>save</button>
         </div>
       </div>
     )
