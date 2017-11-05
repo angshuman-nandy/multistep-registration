@@ -39,7 +39,7 @@ class BasicInfo extends Component {
      if(this.state.update == false)
      this.props.onNext();
       else
-      this.props.goTo(4);
+      this.props.goTo4();
   }
 
 
@@ -53,16 +53,16 @@ class BasicInfo extends Component {
     switch(fieldName) {
       case 'email':
         emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-        fieldValidationErrors.email = emailValid ? '' : ' is invalid';
+        fieldValidationErrors.email = emailValid ? '' : ' is invalid (should be of format  \"id@domain.com\")';
         break;
       case 'name':
         nameValid = value.length >=5;
-        fieldValidationErrors.name = nameValid ? '': ' too short';
+        fieldValidationErrors.name = nameValid ? '': ' too short (minimum 5)';
         break;
       case 'mobile':
         mobileValid =  (value.length == 10 && value.match('^[0-9]+$'))
 
-        fieldValidationErrors.mobile = mobileValid ? '': ' is invalid';
+        fieldValidationErrors.mobile = mobileValid ? '': ' is invalid (should be a number of 10 digits)' ;
         break;
          case 'age':
         ageValid =  (value.length <= 3 && value.match('^[0-9]+$'))
@@ -91,7 +91,7 @@ class BasicInfo extends Component {
 
   render(){
     return(
-      <div className="container form-box">
+      <div>
        <form>
         <div className="panel panel-default">
          <span> <FormErrors formErrors={this.state.formErrors} /></span>
@@ -104,16 +104,16 @@ class BasicInfo extends Component {
             onChange={this.handleChange}  />
         </div>
         <div className={`form-group ${this.errorClass(this.state.formErrors.age)}`}>
-          <label htmlFor="age">age</label>
+          <label htmlFor="age">Age</label>
           <input type="text" required className="form-control" name="age"
-            placeholder="age"
+            placeholder="Age"
             value={this.state.age}
             onChange={this.handleChange}  />
         </div>
           <div className={`form-group ${this.errorClass(this.state.formErrors.mobile)}`}>
-          <label htmlFor="mobile">mobile number</label>
+          <label htmlFor="mobile">Mobile number</label>
           <input type="text" required className="form-control" name="mobile"
-            placeholder="mobile"
+            placeholder="Mobile"
             value={this.state.mobile}
             onChange={this.handleChange}  />
         </div>
@@ -124,8 +124,8 @@ class BasicInfo extends Component {
             value={this.state.email}
             onChange={this.handleChange} />
         </div>
-        <button type="button" onClick={this.handleSave} disabled={!this.state.formValid} className="btn btn-md btn-success" >save</button>
-        <button type="button" className={this.state.update? "btn btn-lg btn-warning ":"hidden"} onClick={this.handleSave} > Update </button>
+        <button type="button" className={!this.state.update? "btn btn-md btn-success ":"hidden"} onClick={this.handleSave} disabled={!this.state.formValid}  >save and continue</button>
+        <button type="button" className={this.state.update? "btn btn-md btn-warning ":"hidden"} onClick={this.handleSave} > Update </button>
         </form>
         </div>
       )

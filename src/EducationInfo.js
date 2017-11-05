@@ -11,7 +11,8 @@ class EducationInfo extends Component{
       instituteValid: false,
       yearValid: false,
       marksValid: false,
-      formValid: false
+      formValid: false,
+      update: this.props.updateVal
     })
     this.handleInputChange = this.handleInputChange.bind(this)
   }
@@ -35,7 +36,11 @@ handleAddEducation = () => {
  eduUpdate = (e) => {
     
   this.props.onUpdate(this.state.education);
-   console.log(this.state.education)
+   console.log(this.state.education);
+    if(this.state.update == false)
+     this.props.onNext();
+      else
+      this.props.goTo4();
    
 }
   
@@ -52,8 +57,8 @@ handleAddEducation = () => {
 
     switch(fieldName) {
       case 'degree':
-        degreeValid =value.match('^[A-Z]+$');
-        fieldValidationErrors.degree = degreeValid ? '' : ' is invalid';
+        degreeValid =value.length >=3;
+        fieldValidationErrors.degree = degreeValid ? '' : ' is invalid (min 3 characters)';
         break;
       case 'institute':
         instituteValid = value.length >=3;
@@ -65,7 +70,7 @@ handleAddEducation = () => {
         fieldValidationErrors.year = yearValid ? '': ' is invalid';
         break;
          case 'marks':
-        marksValid =  (value.length <= 3 && value.match('^[0-9]+$'))
+        marksValid =  (value.length <= 5 && value.match('^[0-9]+$'))
 
         fieldValidationErrors.marks = marksValid ? '': ' is invalid';
         break;
@@ -97,30 +102,30 @@ handleAddEducation = () => {
         {this.state.education.map((edu, idx) => (
           <div className="form-box">
              <div className={`form-group ${this.errorClass(this.state.formErrors.degree)}`}>
-          <label htmlFor="degree">degree</label>
+          <label htmlFor="degree">Degree</label>
           <input type="text" required className="form-control" name="degree"
-            placeholder="degree"
+            placeholder="Degree"
             value={edu.degree}
             onChange={this.handleInputChange(idx)}  />
         </div>
              <div className={`form-group ${this.errorClass(this.state.formErrors.institute)}`}>
-          <label htmlFor="institute">institute</label>
+          <label htmlFor="institute">Institute</label>
           <input type="text" required className="form-control" name="institute"
-            placeholder="institute"
+            placeholder="Institute"
             value={edu.institute}
             onChange={this.handleInputChange(idx)}  />
         </div>
              <div className={`form-group ${this.errorClass(this.state.formErrors.year)}`}>
-          <label htmlFor="year">year</label>
+          <label htmlFor="year">Year</label>
           <input type="text" required className="form-control" name="year"
-            placeholder="year"
+            placeholder="Year"
             value={edu.year}
             onChange={this.handleInputChange(idx)}  />
         </div>
              <div className={`form-group ${this.errorClass(this.state.formErrors.marks)}`}>
-          <label htmlFor="marks">marks</label>
+          <label htmlFor="marks">Marks</label>
           <input type="text" required className="form-control" name="marks"
-            placeholder="marks"
+            placeholder="Marks"
             value={edu.marks}
             onChange={this.handleInputChange(idx)}  />
         </div>
@@ -131,7 +136,8 @@ handleAddEducation = () => {
        
         <div className="add-box">
   <button className="btn btn-medium btn-warning" type="button" onClick={this.handleAddEducation}>Add Another</button>
-        <button className="btn btn-medium btn-success" type="button" disabled={!this.state.formValid} onClick={this.eduUpdate}>save</button>
+        <button className={!this.state.update? "btn btn-md btn-success ":"hidden"} type="button" disabled={!this.state.formValid} onClick={this.eduUpdate}>save and continue </button>
+         <button type="button" className={this.state.update? "btn btn-md btn-warning ":"hidden"} onClick={this.eduUpdate} > Update </button>
         </div>
       </div>
     )
