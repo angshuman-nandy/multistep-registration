@@ -51,7 +51,7 @@ return(
     <h2> Professional Information </h2>
     {this.state.profession.map((pro,id) =>(
     <div className="container m-display-box">
-      <h3> detail: {id+1}</h3>
+      <h3> Detail: {id+1}</h3>
       <h3>Company: </h3>
       <p>{pro.company}</p>
       <h3>Designation: </h3>

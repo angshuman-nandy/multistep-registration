@@ -9,7 +9,10 @@
   width: 100%;
 }
 }
-
+.lbl{
+  float: left;
+  font-size: 10px;
+}
 .hidden{
   display: none;
 }

@@ -106,9 +106,10 @@ goToStep(n){
 
         <div className="container">
           <div className="container box">
-            <Progress completed={25} color={"red"}/>
+          <label className="lbl" >25%</label>
+            <Progress completed={25} color={"#D50000"}/>
             <div className="container progress-div">
-              <CircularProgressbar percentage={25}/>
+              <CircularProgressbar percentage={25} className="progressbar-red" />
             </div>
             <h1>{this.state.step} |  Basic Information </h1>
             <BasicInfo onUpdate={this.updateBasic} goTo4={this.goToStep4} updateVal={this.state.update} fieldValues={fieldvalues} onNext={this.nextStep}/>
@@ -120,9 +121,10 @@ goToStep(n){
       return(
         <div className="container"> 
           <div className="container box">
-            <Progress completed={50} color={"blue"}/>
+           <label className="lbl" >50%</label>
+            <Progress completed={50} color={"#01579B"}/>
             <div className="container progress-div">
-              <CircularProgressbar percentage={50}/>
+              <CircularProgressbar percentage={50} className="progressbar-blue" />
             </div>
             <h1>{this.state.step} |  Education Information </h1>
             <EducationInfo onUpdate={this.updateEdu} goTo4={this.goToStep4} updateVal={this.state.update} fieldValues={fieldvalues} onNext={this.nextStep} />
@@ -135,9 +137,10 @@ goToStep(n){
     return(
       <div className="container"> 
         <div className="container box">
-          <Progress completed={75} color={"yellow"}/>
+           <label className="lbl" >75%</label>
+          <Progress completed={75} color={"#FFD600"}/>
           <div className="container progress-div">
-            <CircularProgressbar percentage={75}/>
+            <CircularProgressbar percentage={75} className="progressbar-yellow"/>
           </div>
           <h1>{this.state.step} |  Professional Information </h1>
           <ProfessionInfo onUpdate={this.updatePro} goTo4={this.goToStep4} updateVal={this.state.update} fieldValues={fieldvalues} onNext={this.nextStep}/>
@@ -148,9 +151,10 @@ goToStep(n){
     case 4:
     return(
     <div className="container box" >
-      <Progress completed={100} color={"green"}/>
+     <label className="lbl" >100%</label>
+      <Progress completed={100} color={"#1B5E20"}/>
       <div className="container progress-div">
-        <CircularProgressbar percentage={100}/>
+        <CircularProgressbar percentage={100} className="progressbar-green"/>
       </div>
       <h1>{this.state.step} |  Confirmation </h1>
       <DisplayData goTo1={this.goToStep1} goTo2={this.goToStep2} goTo3={this.goToStep3} fieldValues={fieldvalues} />
