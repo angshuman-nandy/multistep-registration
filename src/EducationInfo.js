@@ -57,21 +57,20 @@ handleAddEducation = () => {
 
     switch(fieldName) {
       case 'degree':
-        degreeValid =value.length >=3;
-        fieldValidationErrors.degree = degreeValid ? '' : ' is invalid (min 3 characters)';
+        degreeValid = (value.length >=2 &&  value.match('^[A-Z a-z]+$'));
+        fieldValidationErrors.degree = degreeValid ? '' : ' is invalid (min 2 characters and only letters)';
         break;
       case 'institute':
-        instituteValid = value.length >=3;
-        fieldValidationErrors.institute = instituteValid ? '': ' too short';
+        instituteValid = (value.length >=3 &&  value.match('^[A-Z a-z]+$'));
+        fieldValidationErrors.institute = instituteValid ? '': ' too short and only letters';
         break;
       case 'year':
-        yearValid =  (value.length == 4 && value.match('^[0-9]+$'))
+        yearValid =  (value>=1700 && value<=2017 && value.length == 4 && value.match('^[0-9]+$'))
 
         fieldValidationErrors.year = yearValid ? '': ' is invalid';
         break;
          case 'marks':
-        marksValid =  (value.length <= 5 && value.match('^[0-9]+$'))
-
+        marksValid =  (value.length <= 5 && value.match( /^(\d+\.?\d{0,9}|\.\d{1,9})$/ ));
         fieldValidationErrors.marks = marksValid ? '': ' is invalid';
         break;
       default:
@@ -136,7 +135,7 @@ handleAddEducation = () => {
        
         <div className="add-box">
   <button className="btn btn-medium btn-warning" type="button" onClick={this.handleAddEducation}>Add Another</button>
-        <button className={!this.state.update? "btn btn-md btn-success ":"hidden"} type="button" disabled={!this.state.formValid} onClick={this.eduUpdate}>save and continue </button>
+        <button className={!this.state.update? "btn btn-md btn-success ":"hidden"} type="button" onClick={this.eduUpdate}>save and continue </button>
          <button type="button" className={this.state.update? "btn btn-md btn-warning ":"hidden"} onClick={this.eduUpdate} > Update </button>
         </div>
       </div>

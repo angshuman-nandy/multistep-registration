@@ -128,7 +128,6 @@ goToStep(n){
             </div>
             <h1>{this.state.step} |  Education Information </h1>
             <EducationInfo onUpdate={this.updateEdu} goTo4={this.goToStep4} updateVal={this.state.update} fieldValues={fieldvalues} onNext={this.nextStep} />
-            <button className={this.state.update? "hidden":"btn btn-md btn-primary"}  onClick={this.previousStep.bind(this)}><span className="glyphicon glyphicon-step-backward"></span> back </button>
           </div>
         </div>
       )
@@ -137,14 +136,13 @@ goToStep(n){
     return(
       <div className="container"> 
         <div className="container box">
-           <label className="lbl" >75%</label>
+           <label className="lbl1" >75%</label>
           <Progress completed={75} color={"#FFD600"}/>
           <div className="container progress-div">
             <CircularProgressbar percentage={75} className="progressbar-yellow"/>
           </div>
           <h1>{this.state.step} |  Professional Information </h1>
           <ProfessionInfo onUpdate={this.updatePro} goTo4={this.goToStep4} updateVal={this.state.update} fieldValues={fieldvalues} onNext={this.nextStep}/>
-          <button className={this.state.update? "hidden":"btn btn-md btn-primary"}  onClick={this.previousStep.bind(this)}><span className="glyphicon glyphicon-step-backward"></span> back </button>
         </div>
       </div>
       )

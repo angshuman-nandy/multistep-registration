@@ -56,15 +56,15 @@ validateField(fieldName, value) {
 
     switch(fieldName) {
       case 'company':
-        companyValid = value.length >= 3;
+        companyValid = (value.length >=1 && value.match('^[A-Z a-z]+$'));
         fieldValidationErrors.company = companyValid ? '' : ' is invalid';
         break;
       case 'designation':
-        designationValid = value.length >=5;
-        fieldValidationErrors.designation = designationValid ? '': ' too short';
+        designationValid = (value.length >=4 && value.match('^[A-Z a-z]+$'))
+        fieldValidationErrors.designation = designationValid ? '': 'is invalid';
         break;
       case 'yearOfExp':
-        yearOfExpValid =  (value.length <=2 && value.match('^[0-9]+$'))
+        yearOfExpValid =  (value>=0 && value<=100 && value.match('^[0-9]+$'))
 
         fieldValidationErrors.yearOfExp = yearOfExpValid ? '': ' is invalid';
         break;
@@ -120,7 +120,7 @@ return(
   ))}
   <div className="add-box">
     <button type="button" className="btn btn-medium btn-warning" onClick={this.handleAddProfession}>Add Another</button>
-    <button className={!this.state.update? "btn btn-md btn-success ":"hidden"} type="button" disabled={!this.state.formValid} onClick={this.proUpdate}>save and continue</button>
+    <button className={!this.state.update? "btn btn-md btn-success ":"hidden"} type="button"  onClick={this.proUpdate}>save and continue</button>
     <button type="button" className={this.state.update? "btn btn-md btn-warning ":"hidden"} onClick={this.proUpdate} > Update </button>
   </div>
 

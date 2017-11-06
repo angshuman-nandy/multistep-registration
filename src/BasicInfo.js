@@ -56,8 +56,8 @@ class BasicInfo extends Component {
         fieldValidationErrors.email = emailValid ? '' : ' is invalid (should be of format  \"id@domain.com\")';
         break;
       case 'name':
-        nameValid = value.length >=5;
-        fieldValidationErrors.name = nameValid ? '': ' too short (minimum 5)';
+        nameValid = (value.length >=1 && value.match('^[A-Z a-z]+$'));
+        fieldValidationErrors.name = nameValid ? '': ' invalid (only letters and more than 1 characters)';
         break;
       case 'mobile':
         mobileValid =  (value.length == 10 && value.match('^[0-9]+$'))
@@ -65,7 +65,7 @@ class BasicInfo extends Component {
         fieldValidationErrors.mobile = mobileValid ? '': ' is invalid (should be a number of 10 digits)' ;
         break;
          case 'age':
-        ageValid =  (value.length <= 3 && value.match('^[0-9]+$'))
+        ageValid =  (value >=5 && value <= 110  && value.match('^[0-9]+$'))
 
         fieldValidationErrors.age = ageValid ? '': ' is invalid';
         break;

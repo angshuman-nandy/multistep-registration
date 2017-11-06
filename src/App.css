@@ -12,6 +12,14 @@
 .lbl{
   float: left;
   font-size: 10px;
+  font-weight: bold;
+  color: white;
+}
+.lbl1{
+  float: left;
+  font-size: 10px;
+  font-weight: bold;
+  color: black;
 }
 .hidden{
   display: none;
