@@ -40,7 +40,7 @@ handleAddEducation = () => {
     if(this.state.update == false)
      this.props.onNext();
       else
-      this.props.goTo4();
+      this.props.goTo();
    
 }
   

@@ -34,12 +34,12 @@ class BasicInfo extends Component {
     
   }
    handleSave = (e) => {
-    var val = {name: this.state.name,age: this.state.age, mobile: this.state.mobile, email: this.state.email}
+    let val = {name: this.state.name,age: this.state.age, mobile: this.state.mobile, email: this.state.email}
      this.props.onUpdate(val);
      if(this.state.update == false)
      this.props.onNext();
       else
-      this.props.goTo4();
+      this.props.goTo();
   }
 
 

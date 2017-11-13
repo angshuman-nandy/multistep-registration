@@ -20,44 +20,44 @@ constructor(props){
 render(){
 return(
 <div>
-  <div className="container display-box" onClick={this.props.goTo1}>
-    <h2> Basic Information </h2>
-    <h3>Name: </h3>
-    <p> {this.state.name} </p>
-    <h3>Email id: </h3>
-    <p> {this.state.email} </p>
-    <h3>Age: </h3>
+  <div className="container display-box" id="1" onClick={this.props.goTo}>
+    <h2 id="1"> Basic Information </h2>
+    <h3 id="1" >Name: </h3>
+    <p id="1" > {this.state.name} </p>
+    <h3 id="1" >Email id: </h3>
+    <p id="1" > {this.state.email} </p>
+    <h3 id="1" >Age: </h3>
     <p> {this.state.age} </p>
-    <h3>Mobile: </h3>
-    <p> {this.state.mobile} </p>
+    <h3 id="1" >Mobile: </h3>
+    <p id="1" > {this.state.mobile} </p>
   </div>
-  <div className="container display-box" onClick={this.props.goTo2}>
-    <h2> Educational Information </h2>
+  <div className="container display-box" id="2" onClick={this.props.goTo}>
+    <h2 id="2" > Educational Information </h2>
     {this.state.education.map((edu,id) =>(
-    <div className="container m-display-box">
-      <h3> Detail: {id+1}</h3>
-      <h3>Degree: </h3>
-      <p>{edu.degree}</p>
-      <h3>Institute: </h3>
-      <p>{edu.institute}</p>
-      <h3>Year of passing: </h3>
-      <p>{edu.year}</p>
-      <h3>Marks: </h3>
-      <p>{edu.marks}</p>
+    <div id="2" className="container m-display-box">
+      <h3 id="2" > Detail: {id+1}</h3>
+      <h3 id="2" >Degree: </h3>
+      <p id="2" >{edu.degree}</p>
+      <h3 id="2" >Institute: </h3>
+      <p id="2" >{edu.institute}</p>
+      <h3 id="2" >Year of passing: </h3>
+      <p id="2" >{edu.year}</p>
+      <h3 id="2" >Marks: </h3>
+      <p id="2" >{edu.marks}</p>
     </div>
     ))}
   </div>
-  <div className="container display-box" onClick={this.props.goTo3}>
-    <h2> Professional Information </h2>
+  <div className="container display-box"  id="3" onClick={this.props.goTo}>
+    <h2 id="3" > Professional Information </h2>
     {this.state.profession.map((pro,id) =>(
-    <div className="container m-display-box">
-      <h3> Detail: {id+1}</h3>
-      <h3>Company: </h3>
-      <p>{pro.company}</p>
-      <h3>Designation: </h3>
-      <p>{pro.designation}</p>
-      <h3>Years of experience: </h3>
-      <p>{pro.yearOfExp}</p>
+    <div id="3" className="container m-display-box">
+      <h3 id="3" > Detail: {id+1}</h3>
+      <h3 id="3" >Company: </h3>
+      <p id="3" >{pro.company}</p>
+      <h3 id="3" >Designation: </h3>
+      <p id="3" >{pro.designation}</p>
+      <h3 id="3" >Years of experience: </h3>
+      <p id="3" >{pro.yearOfExp}</p>
     </div>
     ))}
   </div>
